@@ -2,6 +2,14 @@ import {reactive} from 'vue';
 
 export const store = reactive({
     cards: [],
-    // ho provato a creare un altro array dove pushare tutte le immagine che sono un array separato ma non funziona PER ORAS
-    // imgs: [], 
+    
+    // 1 creo la chiamata API "base"
+    APIcall: 'https://db.ygoprodeck.com/api/v7/cardinfo.php?num=50&offset=0',
+
+    // 2 creo la query per la ricerca con l'elemento che voglio usare per la ricerca e la composizione dell'api
+    APIquery: "&fname=",
+
+    // 3 creo una proprietà da aggiornare in base alla ricerca
+    cardName: "",
+
 });

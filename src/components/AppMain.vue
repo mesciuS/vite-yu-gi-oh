@@ -3,6 +3,7 @@
 import axios from "axios";
 import {store} from "../store.js";
 import AppCardItem from "./AppCardItem.vue";
+import SearchBar from "./SearchBar.vue";
 export default {
     data() {
         return {
@@ -12,22 +13,39 @@ export default {
     },
 
     components: {
-        AppCardItem
+        AppCardItem,
+        SearchBar,
     },
 
     // 2 poi created e si mette l'api
     created() {
-        axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=50&offset=0').then((res)=>{
+        // 29/3 -- sostituisco l'indirizzo dell'API con una chiamata allo store
+        axios.get(this.store.APIcall).then((res)=>{
             console.log(res.data.data);
             // 4 pusho i dati dell'api nell'array 
             this.store.cards = res.data.data;
             // ho provato a fare il this.store.imgs (che è il nome dell'altro array su store) = res.data.data.card_images ma non funziona
         });
     },
+
+    methods: {
+        search() {
+            // unisco tutti i componenti per creare un nuovo indirizzo
+            let apiNewString = this.store.APIcall + this.store.APIquery + this.store.cardName
+
+            // chiamo di nuovo questo nuovo indirizzo
+            axios.get(apiNewString).then((res)=> {
+                // 29/3 ora posso modificare il v-for che mostra le carte
+                this.store.cards = res.data.data;
+            });
+        },
+    },
 }
 </script>
 
 <template>
+    <!-- emit di searchbar.vue -->
+    <SearchBar @searchCard="search()"></SearchBar>
     <div id="card-list">
         <AppCardItem v-for="card in store.cards" :card="card"></AppCardItem>
     </div>
@@ -38,5 +56,7 @@ export default {
         display: flex;
         flex-flow: row wrap;
         gap: 20px;
+
+        padding: 30px;
     }
 </style>
