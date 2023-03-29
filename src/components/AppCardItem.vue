@@ -14,6 +14,7 @@ export default {
         // type: String,
         // al posto di fare come sopra posso passare tutto l'oggetto
         card: Object,
+    
     },
 }
 </script>
@@ -21,8 +22,8 @@ export default {
 <template>
     <div id="card">
         <div>
-            <!-- questo non funziona, cercare modo per entrare nell'array dell'array dell'api -->
-            <img :src="card.card_images.image_url" alt="">
+            <!-- dovevo inserire l'array [0] senza punteggiatura dopo card_images -->
+            <img :src="card.card_images[0].image_url" alt="">
         </div>
         <div>
             <strong>{{ card.name }}</strong>
@@ -32,8 +33,10 @@ export default {
 
 <style lang="scss" scoped>
     #card {
-        width: 200px;
-        height: 250px;
-        border: 1px solid red;
+        width: calc(100% / 4 - 20px / 4 * 3);
+    }
+
+    img {
+        width: 100%;
     }
 </style>

@@ -21,6 +21,7 @@ export default {
             console.log(res.data.data);
             // 4 pusho i dati dell'api nell'array 
             this.store.cards = res.data.data;
+            // ho provato a fare il this.store.imgs (che è il nome dell'altro array su store) = res.data.data.card_images ma non funziona
         });
     },
 }
